@@ -28,6 +28,7 @@ jobs:
         os:
         - ubuntu-latest
         - macos-latest
+        - windows-latest
         node:
         - 8
         - '*'
@@ -39,6 +40,11 @@ jobs:
         - os: macos-latest
           node: '*'
         - os: macos-latest
+          node: 8
+          test-command: test:fast
+        - os: windows-latest
+          node: '*'
+        - os: windows-latest
           node: 8
           test-command: test:fast
 
@@ -55,7 +61,7 @@ jobs:
 
     - run: npm ci
     - run: npm run ${{ matrix.test-command }} -- --retries 1
-      timeout-minutes: 10
+      timeout-minutes: 15
       env:
         NODE_LTS: ${{ matrix.node == 8 }}
         DEBUG: ember-cli-update,boilerplate-update,git-diff-apply,git-fixtures
