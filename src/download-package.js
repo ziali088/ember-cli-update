@@ -4,7 +4,7 @@ const path = require('path');
 const { promisify } = require('util');
 const tmpDir = promisify(require('tmp').dir);
 const npa = require('npm-package-arg');
-const run = require('./run');
+const { spawn } = require('./run');
 
 async function downloadPackage(name, url, range) {
   if (!range) {
@@ -18,7 +18,7 @@ async function downloadPackage(name, url, range) {
   }
 
   let newTmpDir = await tmpDir();
-  let output = await run(`npm install ${url}`, { cwd: newTmpDir });
+  let output = await spawn('npm', ['install', url], { cwd: newTmpDir });
   // if (!name) {
   //   name = output.match(/^\+ (.*)@\d\.\d\.\d.*$/m)[1];
   // }
